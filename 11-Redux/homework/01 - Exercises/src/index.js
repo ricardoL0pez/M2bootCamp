@@ -3,7 +3,7 @@ const contador = require("./reducer");
 const { incremento, decremento } = require("./actions");
 
 // En esta línea creamos nuestro store. Pasándole como parámetro nuestro Reducer
-let store = createStore(contador);
+let store = createStore(contador);//El parámetro-argumento que recibe es el reducer 
 //let store = createStore(reducer);
 let valor = document.querySelector("#valor") // Obtenemos el elemento con el id `valor`.
 
@@ -12,10 +12,10 @@ let valor = document.querySelector("#valor") // Obtenemos el elemento con el id 
 // En el primer render y cada vez que nos subscribamos al Store.
 // Utilizamos el elemento obtenido arriba para mostrar el State.
 function renderContador() { //esta funcion no puede modificar el store, lo hace el reducer, esta funcion trae el estado del store y lo muestra en valor
-  let counter = store.getState().contador //getState trae el estado completo
   // Obtenemos la propiedad 'contador' de nuestro store:
-  valor.innerHTML = counter;
+  let counter = store.getState().contador //getState trae el estado completo. El estado es un objeto, entonces accedemos al valor de contador por notacion de punto. 
   // Seteamos (actualizar, modificar, cambiar valor) el número obtenido como texto dentro del elemento con id 'valor': dentro del elemento con ID valor tenemos que mostrar lo que nos trajimos como estado
+  valor.innerHTML = counter;
 }
 
 // Ejecutamos la función 'renderContador':
@@ -32,9 +32,9 @@ decrementoButton.addEventListener("click", () => store.dispatch(decremento()));
 
 let incrementoImparButton = document.querySelector("#incrementoImpar");
 incrementoImparButton.addEventListener("click", () => 
-store.getState().contador % 2 !== 0 && store.dispatch(incremento()));
+store.getState().contador % 2 !== 0 && store.dispatch(incremento()));//Traigo el estado y verifico ai el valro de contador es impar
 
 let incrementoAsyncButton = document.querySelector("#incrementoAsync");
 incrementoAsyncButton.addEventListener("click", () => setTimeout(()=>{
   store.dispatch(incremento())
-}))
+},2000))

@@ -1,5 +1,4 @@
-//* INDEX O STORE CONTIENE LA CONFIGURACION DEL STORE
-/*Lo primero que hacemos para trabajar con Redux es configurar el store*/
+//* INDEX O STORE CONTIENE LA CONFIGURACION DEL STORE Lo primero que hacemos para trabajar con Redux es configurar el store
 const { createStore } = require("redux");//Sintaxis CommonJS
 const reducer = require("./reducer");
 const {
@@ -34,5 +33,5 @@ console.log(store.getState());
 
 
 // La const store permite interactuar con él de varias maneras, como enviar acciones (con dispatch), obtener el estado actual (con getState), y registrarte para recibir notificaciones cuando cambia el estado (con subscribe).
-//getState() proporcionado por la tienda Redux. Esto te permite consultar el estado global desde cualquier parte de tu aplicación.
+//getState() proporcionado por la store de Redux. Permite consultar el estado global desde cualquier parte de la aplicación.
 //sistemas para importar módulos: CommonJS (usando require) y ES Modules (usando import).

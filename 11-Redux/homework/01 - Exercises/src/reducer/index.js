@@ -1,6 +1,6 @@
 const { INCREMENTO, DECREMENTO } = require('../action-types');
 
-const initialState = { //*STORE
+const initialState = { //ESTADO INICIAL
   contador: 0
 }
 
@@ -13,7 +13,7 @@ function contador(state = initialState, action) { //*REDUCER aqui la reducer tie
   switch (action.type) {
     case INCREMENTO: 
       return {
-        ...state,
+        ...state, //Se puede o no agregar el spread operator, ya que el estado contador esta en cero y no existe mas información
         contador: state.contador + 1
       }
 
