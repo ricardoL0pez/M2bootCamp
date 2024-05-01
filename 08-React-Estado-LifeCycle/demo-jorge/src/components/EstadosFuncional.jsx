@@ -36,3 +36,9 @@ const ContadorFuncional = () => {
 };
 
 export default ContadorFuncional;
+
+
+
+
+
+
