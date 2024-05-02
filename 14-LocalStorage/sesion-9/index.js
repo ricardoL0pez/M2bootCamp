@@ -1,3 +1,4 @@
+//crud con ararray
 var colores = [];
 
 var inputColor = document.querySelector('#color');
@@ -7,18 +8,57 @@ inputColor.addEventListener('keypress', (event) => {
         inputColor.value = '';
         llenaTabla();
     }
-    console.log(event); 
+    console.log(event);
 });
 
 function llenaTabla() {
     var body = '';
     for (var i = 0; i < colores.length; i++) {
-        var btnEditar = '<button id="btnE'+i+'" data-indice="'+i+'" class="btn btn-warning">Editar</button>';
-        var btnEliminar = '<button data-indice="'+i+'"class="btn btn-danger el">Eliminar</button>';
-        var input = '<input id="input '+i+'" class="form-control d-none" value="'+colores[i]+'"><input>';
-        var guardar='<button class="btn btn-success guar d-none" id="boton'+i+'" dta-indice="'+i+'">Guardar</button>'
-        body += '<tr><td>' + (i + 1) + '</td><td>'+input+'<div id="div'+i+'">'+colores[i]+'</div></td><td>'+btnEditar+''+guardar+'</td><td>'+btnEliminar+'</td></tr>';
+        var btnEditar = '<button id="btnEditar' + i + '" data-indice="' + i + '" class="btn btn-warning btnEditar">Editar</button>';
+        var btnEliminar = '<button data-indice="' + i + '" class="btn btn-danger btnEliminar">Eliminar</button>';
+        var input = '<input id="input' + i + '" class="form-control d-none" value="' + colores[i] + '"></input>';
+        var guardar = '<button class="btn btn-success btnGuardar d-none" id="btnGuardar' + i + '" data-indice="' + i + '">Guardar</button>';
+        body += '<tr><td>' + (i + 1) + '</td><td>' + input + '<div id="div' + i + '">' + colores[i] + '</div></td><td>' + btnEditar + '' + guardar + '</td><td>' + btnEliminar + '</td></tr>';
     }
     document.querySelector('#datos').innerHTML = body;
-    EventSource();
+    eventos(); // Corregido de EventSource() a eventos()
+}
+
+function eventos() {
+    var btnEliminar = document.querySelectorAll('.btnEliminar');
+    btnEliminar.forEach(elemento => elemento.addEventListener('click', event => {
+        var indice = event.target.getAttribute('data-indice'); // Corregido de getAttributte a getAttribute
+        eliminar(indice);
+    }));
+    var btnEditar = document.querySelectorAll('.btnEditar');
+    btnEditar.forEach(elemento => elemento.addEventListener('click', event => {
+        var indice = event.target.getAttribute('data-indice'); // Corregido de getAttributte a getAttribute
+        mostrar(indice);
+    }));
+    var btnGuardar = document.querySelectorAll('.btnGuardar');
+    btnGuardar.forEach(elemento => elemento.addEventListener('click', event => {
+        var indice = event.target.getAttribute('data-indice'); // Corregido de getAttributte a getAttribute
+        actualizar(indice);
+    }));
+}
+
+function eliminar(indice) { // Corregido de aliminar a eliminar
+    colores.splice(indice,1);
+    llenaTabla();
+}
+function mostrar(indice) {
+    var div = document.querySelector('#div'+indice);
+    var campo = document.querySelector('#input' +indice);
+    var botonEditar = document.querySelector('#btnEditar' +indice);
+    var botonGuardar = document.querySelector('#btnGuardar' +indice); // Corregido de btnGuardar a botonGuardar
+    div.classList.add('d-none');
+    campo.classList.remove('d-none');
+    botonEditar.classList.add('d-none');
+    botonGuardar.classList.remove('d-none');
+}
+
+function actualizar(indice) {
+    var nuevoColor= document.querySelector('#input' +indice).value;
+    colores[indice] = nuevoColor;
+    llenaTabla();
 }
