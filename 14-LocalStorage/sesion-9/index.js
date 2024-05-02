@@ -1,14 +1,18 @@
 //crud con ararray
-var colores = [];
+import { storage } from './storage.js';
+
+var colores = storage.obtener('colores').split(',');
+llenaTabla();
 
 var inputColor = document.querySelector('#color');
 inputColor.addEventListener('keypress', (event) => {
     if (event.keyCode === 13) { //event.key==='Enter
         colores.push(inputColor.value);
+        storage.asignar('colores',colores);
         inputColor.value = '';
         llenaTabla();
     }
-    console.log(event);
+
 });
 
 function llenaTabla() {
@@ -21,36 +25,37 @@ function llenaTabla() {
         body += '<tr><td>' + (i + 1) + '</td><td>' + input + '<div id="div' + i + '">' + colores[i] + '</div></td><td>' + btnEditar + '' + guardar + '</td><td>' + btnEliminar + '</td></tr>';
     }
     document.querySelector('#datos').innerHTML = body;
-    eventos(); // Corregido de EventSource() a eventos()
+    eventos(); 
 }
 
 function eventos() {
     var btnEliminar = document.querySelectorAll('.btnEliminar');
     btnEliminar.forEach(elemento => elemento.addEventListener('click', event => {
-        var indice = event.target.getAttribute('data-indice'); // Corregido de getAttributte a getAttribute
+        var indice = event.target.getAttribute('data-indice'); 
         eliminar(indice);
     }));
     var btnEditar = document.querySelectorAll('.btnEditar');
     btnEditar.forEach(elemento => elemento.addEventListener('click', event => {
-        var indice = event.target.getAttribute('data-indice'); // Corregido de getAttributte a getAttribute
+        var indice = event.target.getAttribute('data-indice'); 
         mostrar(indice);
     }));
     var btnGuardar = document.querySelectorAll('.btnGuardar');
     btnGuardar.forEach(elemento => elemento.addEventListener('click', event => {
-        var indice = event.target.getAttribute('data-indice'); // Corregido de getAttributte a getAttribute
+        var indice = event.target.getAttribute('data-indice'); 
         actualizar(indice);
     }));
 }
 
-function eliminar(indice) { // Corregido de aliminar a eliminar
+function eliminar(indice) { 
     colores.splice(indice,1);
+    storage.asignar('colores',colores);
     llenaTabla();
 }
 function mostrar(indice) {
     var div = document.querySelector('#div'+indice);
     var campo = document.querySelector('#input' +indice);
     var botonEditar = document.querySelector('#btnEditar' +indice);
-    var botonGuardar = document.querySelector('#btnGuardar' +indice); // Corregido de btnGuardar a botonGuardar
+    var botonGuardar = document.querySelector('#btnGuardar' +indice); 
     div.classList.add('d-none');
     campo.classList.remove('d-none');
     botonEditar.classList.add('d-none');
@@ -60,5 +65,6 @@ function mostrar(indice) {
 function actualizar(indice) {
     var nuevoColor= document.querySelector('#input' +indice).value;
     colores[indice] = nuevoColor;
+    storage.asignar('colores',colores);
     llenaTabla();
 }

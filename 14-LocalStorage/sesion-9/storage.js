@@ -2,10 +2,11 @@ export const storage = {
 
     obtener(clave){
         const valor = window.localStorage.getItem(clave);
-        if(!valor){
-            return null;
+       if(!valor){
+            return [];
         }
         return valor;
+     
     },
 
     asignar(clave, valor){
